@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with health check-in streak data.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "streakCount": { "type": "number", "description": "Consecutive days of check-ins." },
+        "lastActivityDate": { "type": "string", "format": "date-time", "description": "Last time the user checked in." },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "favorites": { "type": "array", "items": { "type": "string" }, "description": "Family members or key contacts." },
+        "contacts": { "type": "array", "items": { "type": "string" }, "description": "List of contact emails." }
+      },
+      "required": ["uid", "email"]
+    },
+    "CheckIn": {
+      "title": "CheckIn",
+      "description": "A vital 'I am alive' signal sent from a patient to their family.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["healthy", "needs_attention"], "description": "Current health status reported." },
+        "read": { "type": "boolean" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" }
+          }
+        }
+      },
+      "required": ["senderId", "receiverId", "timestamp", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "/checkins/{checkinId}": {
+      "schema": "CheckIn",
+      "description": "Vital check-in signals."
+    }
+  }
+}

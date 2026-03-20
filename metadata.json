@@ -1,0 +1,5 @@
+{
+  "name": "iamalive",
+  "description": "A vital check-in app for isolated patients to reassure their families. Send daily 'I am alive' signals to maintain connection and peace of mind during isolation.",
+  "requestFramePermissions": ["notification", "geolocation"]
+}
